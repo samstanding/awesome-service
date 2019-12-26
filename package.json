@@ -6,8 +6,7 @@
         "@testing-library/jest-dom": "^4.2.4",
         "@testing-library/react": "^9.4.0",
         "@testing-library/user-event": "^7.2.1",
-        "@types/enzyme": "^3.10.4",
-        "@types/enzyme-adapter-react-16": "^1.0.5",
+        "@types/faker": "^4.1.8",
         "@types/jest": "^24.0.24",
         "@types/node": "^12.12.22",
         "@types/react": "^16.9.17",
@@ -45,8 +44,6 @@
         ]
     },
     "devDependencies": {
-        "cypress": "^3.8.0",
-        "enzyme": "^3.11.0",
-        "enzyme-adapter-react-16": "^1.15.2"
+        "cypress": "^3.8.0"
     }
 }

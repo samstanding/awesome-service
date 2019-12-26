@@ -18,10 +18,12 @@ const Signup: React.FC = () => {
         const validEmailRegex = /\S+@\S+\.\S+/;
         !validEmailRegex.test(email) && errorArray.push("Invalid email address");
         password.length < 8 && errorArray.push("Password must be longer than 8 characters");
+        password === email && errorArray.push("Password cannot be the same as your email");
         if (errorArray.length) {
             setErrors(errorArray);
             return;
         }
+        // simulating an AJAX call
         setLoading(true);
         setTimeout(() => {
             history.push("/welcome", { email, firstName });
@@ -36,7 +38,7 @@ const Signup: React.FC = () => {
                 content="Let's Sign Up"
                 subheader="Use the form below to sign up for this super awesome service. You’re only a few steps away!"
             />
-            <Form onSubmit={handleSubmit} error={errors.length > 0} loading={loading}>
+            <Form onSubmit={handleSubmit} error={errors.length > 0} loading={loading} data-testid="form">
                 <Message error header="Please address the following errors" list={errors} />
                 <Form.Input
                     label="First Name"
@@ -64,7 +66,7 @@ const Signup: React.FC = () => {
                     required
                 />
                 <div className="button-container">
-                    <Form.Button type="submit" color="orange" floated="right" id="signup">
+                    <Form.Button type="submit" color="orange" floated="right" id="signup" data-testid="signupBtn">
                         Sign Up
                     </Form.Button>
                 </div>
