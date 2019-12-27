@@ -1,23 +1,19 @@
 import React from "react";
-import { useLocation, useHistory } from "react-router-dom";
 import { Header, Divider, Button } from "semantic-ui-react";
 import ContentContainer from "../shared/ContentContainer";
 import "./styles.css";
+import { User } from "../App";
 
-const Welcome: React.FC = () => {
-    const { state } = useLocation();
-    let history = useHistory();
+interface WelcomeProps {
+    user: User;
+}
 
-    if (!state) {
-        history.push("/signup");
-        return null;
-    }
-
-    const { firstName, email } = state;
+const Welcome: React.FC<WelcomeProps> = ({ user }: WelcomeProps) => {
+    const { firstName, email } = user;
 
     return (
         <ContentContainer>
-            <Header as="h2" textAlign="center" content={`Welcome ${firstName}!`} />
+            <Header as="h2" textAlign="center" content={`Welcome ${firstName}!`} data-testid="firstname" />
             <span>You've been registered for this awesome service. Please check your email listed below for instructions</span>
             <Divider />
             <span>

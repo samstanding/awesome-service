@@ -6,22 +6,11 @@ import Signup from "./Signup";
 
 describe("Signup", () => {
     it("renders Sign Up prompt", () => {
-        const { getByText } = renderWithMemoryRouter(<Signup />);
+        const { getByText } = renderWithMemoryRouter(<Signup setUser={jest.fn()} />);
         expect(getByText("Sign Up")).toBeInTheDocument();
     });
-
-    it("calls handleSubmit when user submits form", () => {
-        const handleSubmit = jest.fn();
-        const { getByTestId } = renderWithMemoryRouter(<Signup />);
-
-        const submitButtonNode = getByTestId(/form/i);
-        fireEvent.submit(submitButtonNode);
-
-        expect(handleSubmit).toHaveBeenCalled();
-    });
-
     it("displays error message if invalid email address is provided", () => {
-        const { getByLabelText, getByText, getByTestId } = renderWithMemoryRouter(<Signup />);
+        const { getByLabelText, getByText, getByTestId } = renderWithMemoryRouter(<Signup setUser={jest.fn()} />);
 
         const firstNameNode = getByLabelText(/first name/i);
         const emailNode = getByLabelText(/email/i);
@@ -37,7 +26,7 @@ describe("Signup", () => {
     });
 
     it("doesn't display error message if form is valid", () => {
-        const { getByLabelText, queryByText, getByTestId } = renderWithMemoryRouter(<Signup />);
+        const { getByLabelText, queryByText, getByTestId } = renderWithMemoryRouter(<Signup setUser={jest.fn()} />);
 
         const firstNameNode = getByLabelText(/first name/i);
         const emailNode = getByLabelText(/email/i);
@@ -54,7 +43,7 @@ describe("Signup", () => {
         expect(queryByText("Password must be longer than 8 characters")).toBeNull();
     });
     it("displays an error message if password matches email", () => {
-        const { getByLabelText, getByText, getByTestId } = renderWithMemoryRouter(<Signup />);
+        const { getByLabelText, getByText, getByTestId } = renderWithMemoryRouter(<Signup setUser={jest.fn()} />);
 
         const emailValue = faker.internet.email();
 
@@ -71,7 +60,7 @@ describe("Signup", () => {
         expect(getByText("Password cannot be the same as your email")).toBeInTheDocument();
     });
     it("displays an error message if password is too short", () => {
-        const { getByLabelText, getByText, getByTestId } = renderWithMemoryRouter(<Signup />);
+        const { getByLabelText, getByText, getByTestId } = renderWithMemoryRouter(<Signup setUser={jest.fn()} />);
 
         const firstNameNode = getByLabelText(/first name/i);
         const emailNode = getByLabelText(/email/i);

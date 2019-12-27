@@ -3,8 +3,13 @@ import { Form, Header, Message } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import ContentContainer from "../shared/ContentContainer";
 import "./styles.css";
+import { User } from "../App";
 
-const Signup: React.FC = () => {
+interface SignupProps {
+    setUser: (arg: User) => void;
+}
+
+const Signup: React.FC<SignupProps> = ({ setUser }: SignupProps) => {
     const [firstName, setFirstName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -24,6 +29,10 @@ const Signup: React.FC = () => {
             return;
         }
         // simulating an AJAX call
+        setUser({
+            firstName,
+            email
+        });
         setLoading(true);
         setTimeout(() => {
             history.push("/welcome", { email, firstName });

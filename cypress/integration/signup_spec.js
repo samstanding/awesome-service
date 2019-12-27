@@ -1,56 +1,67 @@
+import faker from "faker";
+
 describe("The Signup Form", () => {
     it("saves user inputs and reroutes them to welcome page", () => {
+        const firstName = faker.name.firstName();
+        const email = faker.internet.email();
+        const password = faker.internet.password();
+
         cy.visit("/");
 
         cy.get("#firstname")
-            .type("Eric")
-            .should("have.value", "Eric");
+            .type(firstName)
+            .should("have.value", firstName);
 
         cy.get("#email")
-            .type("eric@coolguy.com")
-            .should("have.value", "eric@coolguy.com");
+            .type(email)
+            .should("have.value", email);
 
         cy.get("#password")
-            .type("longishpassword")
-            .should("have.value", "longishpassword");
+            .type(password)
+            .should("have.value", password);
 
         cy.get("#signup").click();
 
         cy.url().should("include", "welcome");
 
-        cy.get("h2").contains("Eric");
+        cy.get("h2").contains(firstName);
 
-        cy.get("strong").contains("eric@coolguy.com");
+        cy.get("strong").contains(email);
     });
     it("displays an error when invalid email address is entered", () => {
+        const firstName = faker.name.firstName();
+        const password = faker.internet.password();
+
         cy.visit("/");
 
         cy.get("#firstname")
-            .type("steve")
-            .should("have.value", "steve");
+            .type(firstName)
+            .should("have.value", firstName);
 
         cy.get("#email")
-            .type("ericcoolguy.com")
-            .should("have.value", "ericcoolguy.com");
+            .type(firstName)
+            .should("have.value", firstName);
 
         cy.get("#password")
-            .type("longishpassword")
-            .should("have.value", "longishpassword");
+            .type(password)
+            .should("have.value", password);
 
         cy.get("#signup").click();
 
         cy.get("li").contains("Invalid email address");
     });
     it("displays an error when invalid password is entered", () => {
+        const firstName = faker.name.firstName();
+        const email = faker.internet.email();
         cy.visit("/");
 
         cy.get("#firstname")
-            .type("steve")
-            .should("have.value", "steve");
+            .type(firstName)
+            .should("have.value", firstName);
 
         cy.get("#email")
-            .type("eric@coolguy.com")
-            .should("have.value", "eric@coolguy.com");
+            .type(email)
+            .should("have.value", email);
 
         cy.get("#password")
             .type("short")
