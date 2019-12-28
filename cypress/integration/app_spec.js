@@ -24,6 +24,8 @@ describe("The Signup Form", () => {
 
         cy.get("[data-testid=submit]").click();
 
+        cy.contains("Saving Signup Data");
+
         cy.url().should("include", "welcome");
 
         cy.get("h2").contains(firstName);
