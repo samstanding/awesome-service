@@ -1,23 +1,26 @@
 import React from "react";
-import Enzyme, { shallow } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { render } from "@testing-library/react";
+import faker from "faker";
 import ContentContainer from "./ContentContainer";
 
-Enzyme.configure({ adapter: new Adapter() });
+describe("ContentContainer", () => {
+    it("renders its children", () => {
+        const header = faker.hacker.phrase();
+        const NewHeader: React.FC = () => <h1>{header}</h1>;
 
-describe("fuck testing", () => {
-    test("fucking fuck", () => {
-        const wrapper = shallow(
-            //@ts-ignore
-            <ContentContainer
-                props={
-                    <>
-                        {" "}
-                        <h1>fuck this</h1>{" "}
-                    </>
-                }
-            />
+        const NewComponent: React.FC = () => (
+            <div>
+                <p>Not an empty div</p>
+            </div>
         );
-        expect(wrapper.exists()).toBe(true);
+
+        const { getByText } = render(
+            <ContentContainer>
+                <NewHeader />
+                <NewComponent />
+            </ContentContainer>
+        );
+
+        expect(getByText(header)).toBeInTheDocument();
     });
 });

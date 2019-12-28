@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { Segment, Container } from "semantic-ui-react";
 
 interface ContentContainerProps {
-    children: ReactElement[];
+    children: ReactElement[] | ReactElement;
 }
 
 const ContentContainer: React.FC<ContentContainerProps> = ({ children }: ContentContainerProps) => (

@@ -8,10 +8,10 @@ describe("Welcome page", () => {
         const firstName = faker.name.firstName();
         const email = faker.internet.email();
 
-        const { getByText } = render(<Welcome user={{ firstName, email }} />);
+        const { getByText, getByTestId } = render(<Welcome user={{ firstName, email }} />);
 
         expect(getByText("Sign In")).toBeInTheDocument();
-        expect(getByText(`Welcome ${firstName}!`)).toBeInTheDocument();
-        expect(getByText(email)).toBeInTheDocument();
+        expect(getByTestId("firstname").textContent).toContain(firstName);
+        expect(getByTestId("email").textContent).toEqual(email);
     });
 });

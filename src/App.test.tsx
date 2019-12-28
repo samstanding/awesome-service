@@ -4,8 +4,9 @@ import { fireEvent } from "@testing-library/dom";
 import faker from "faker";
 import App from "./App";
 
+jest.useFakeTimers();
+
 describe("The App", () => {
-    jest.useFakeTimers();
     it("renders a form with inputs for first name, email and password", () => {
         const { getByLabelText } = renderWithMemoryRouter(<App />);
 
@@ -29,6 +30,8 @@ describe("The App", () => {
         fireEvent.change(passwordNode, { target: { value: password } });
 
         fireEvent.submit(getByTestId(/form/i));
+
+        jest.runAllTimers();
 
         expect(window.location.href).toContain("welcome");
         expect(getByTestId("firstname").textContent).toContain(firstName);

@@ -1,3 +1,5 @@
+/// <reference types="Cypress" />
+
 import faker from "faker";
 
 describe("The Signup Form", () => {
@@ -8,19 +10,19 @@ describe("The Signup Form", () => {
 
         cy.visit("/");
 
-        cy.get("#firstname")
+        cy.get("[data-testid=firstname] > input")
             .type(firstName)
             .should("have.value", firstName);
 
-        cy.get("#email")
+        cy.get("[data-testid=email] > input")
             .type(email)
             .should("have.value", email);
 
-        cy.get("#password")
+        cy.get("[data-testid=password] > input")
             .type(password)
             .should("have.value", password);
 
-        cy.get("#signup").click();
+        cy.get("[data-testid=submit]").click();
 
         cy.url().should("include", "welcome");
 
@@ -34,19 +36,19 @@ describe("The Signup Form", () => {
 
         cy.visit("/");
 
-        cy.get("#firstname")
+        cy.get("[data-testid=firstname] > input")
             .type(firstName)
             .should("have.value", firstName);
 
-        cy.get("#email")
+        cy.get("[data-testid=email] > input")
             .type(firstName)
             .should("have.value", firstName);
 
-        cy.get("#password")
+        cy.get("[data-testid=password] > input")
             .type(password)
             .should("have.value", password);
 
-        cy.get("#signup").click();
+        cy.get("[data-testid=submit]").click();
 
         cy.get("li").contains("Invalid email address");
     });
@@ -55,20 +57,25 @@ describe("The Signup Form", () => {
         const email = faker.internet.email();
         cy.visit("/");
 
-        cy.get("#firstname")
+        cy.get("[data-testid=firstname] > input")
             .type(firstName)
             .should("have.value", firstName);
 
-        cy.get("#email")
+        cy.get("[data-testid=email] > input")
             .type(email)
             .should("have.value", email);
 
-        cy.get("#password")
+        cy.get("[data-testid=password] > input")
             .type("short")
             .should("have.value", "short");
 
-        cy.get("#signup").click();
+        cy.get("[data-testid=submit]").click();
 
         cy.get("li").contains("Password must be longer than 8 characters");
+    });
+    it("reroutes you to signup if you haven't signed up", () => {
+        cy.visit("/welcome");
+
+        cy.url().should("include", "signup");
     });
 });
