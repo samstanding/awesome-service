@@ -17,7 +17,7 @@ const Welcome: React.FC<WelcomeProps> = ({ user }: WelcomeProps) => {
             <span>You've been registered for this awesome service. Please check your email listed below for instructions</span>
             <Divider />
             <span>
-                <strong>{email}</strong>
+                <strong data-testid="email">{email}</strong>
             </span>
             <div className="button-container">
                 <Button color="orange" floated="right">

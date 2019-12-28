@@ -35,7 +35,7 @@ const Signup: React.FC<SignupProps> = ({ setUser }: SignupProps) => {
         });
         setLoading(true);
         setTimeout(() => {
-            history.push("/welcome", { email, firstName });
+            history.push("/welcome");
         }, 500);
     };
 
