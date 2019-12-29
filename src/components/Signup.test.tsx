@@ -25,7 +25,7 @@ describe("Signup", () => {
         fireEvent.submit(getByTestId(/form/i));
 
         expect(queryByText("Invalid email address")).toBeNull();
-        expect(queryByText("Password cannot be the same as your email")).toBeNull();
+        expect(queryByText("Password cannot be the same as your email or first name")).toBeNull();
         expect(queryByText("Password must be longer than 8 characters")).toBeNull();
 
         expect(getByText("Saving Signup Data")).toBeInTheDocument();
@@ -64,7 +64,7 @@ describe("Signup", () => {
 
         fireEvent.submit(getByTestId(/form/i));
 
-        expect(getByText("Password cannot be the same as your email")).toBeInTheDocument();
+        expect(getByText("Password cannot be the same as your email or first name")).toBeInTheDocument();
     });
     it("displays an error message if password is too short", () => {
         const { getByLabelText, getByText, getByTestId } = renderWithMemoryRouter(<Signup setUser={jest.fn()} />);

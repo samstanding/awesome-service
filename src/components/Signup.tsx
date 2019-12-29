@@ -23,7 +23,7 @@ const Signup: React.FC<SignupProps> = ({ setUser }: SignupProps) => {
         const validEmailRegex = /\S+@\S+\.\S+/;
         !validEmailRegex.test(email) && errorArray.push("Invalid email address");
         password.length < 8 && errorArray.push("Password must be longer than 8 characters");
-        password === email && errorArray.push("Password cannot be the same as your email");
+        (password === email || password === firstName) && errorArray.push("Password cannot be the same as your email or first name");
         if (errorArray.length) {
             setErrors(errorArray);
             return;
