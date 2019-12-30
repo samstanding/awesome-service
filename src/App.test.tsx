@@ -16,7 +16,7 @@ describe("The App", () => {
         expect(getByLabelText("Confirm Password")).toBeInTheDocument();
     });
     it("takes in valid form data, and routes user to welcome page where it displays first name and email", () => {
-        const { getByLabelText, getByTestId, getByText } = renderWithMemoryRouter(<App />);
+        const { getByLabelText, getByTestId } = renderWithMemoryRouter(<App />);
 
         const firstName = faker.name.firstName();
         const email = faker.internet.email();
@@ -66,6 +66,7 @@ describe("The App", () => {
 
         expect(getByText("Password cannot be the same as your email or first name")).toBeInTheDocument();
         expect(getByText("Invalid email address")).toBeInTheDocument();
+        expect(getByText("Passwords must match")).toBeInTheDocument()
 
         expect(window.location.href).toContain("signup");
 

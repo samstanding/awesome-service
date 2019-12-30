@@ -1,17 +1,15 @@
 import React from "react";
 import { renderWithMemoryRouter } from "../test-utils";
-import { fireEvent, queryByText } from "@testing-library/dom";
+import { fireEvent } from "@testing-library/dom";
 import faker from "faker";
 import Signup from "./Signup";
-
-jest.useFakeTimers();
 
 describe("Signup", () => {
     it("renders Sign Up prompt", () => {
         const { getByText } = renderWithMemoryRouter(<Signup setUser={jest.fn()} />);
         expect(getByText("Let's Sign Up")).toBeInTheDocument();
     });
-    it("displays validation rules, takes in valid form data, doesn't throw errors, shows loading text and routes to new page", () => {
+    it("displays validation rules, takes in valid form data, doesn't throw errors, shows loading text", () => {
         const { getByLabelText, queryByText, getByTestId, getByText } = renderWithMemoryRouter(<Signup setUser={jest.fn()} />);
         const password = faker.internet.password();
 
@@ -36,16 +34,10 @@ describe("Signup", () => {
         expect(queryByText("Passwords must match")).toBeNull();
 
         expect(getByText("Saving Signup Data")).toBeInTheDocument();
-
-        jest.runAllTimers();
-
-        expect(window.location.href).not.toContain("signup");
     });
-    it("displays appropriate error messages if inputs are not valid", () => {
-        const { getByLabelText, getByText, getByTestId, queryByText } = renderWithMemoryRouter(<Signup setUser={jest.fn()} />);
+    it("displays error message if email is invalid", () => {
+        const { getByLabelText, getByText, getByTestId } = renderWithMemoryRouter(<Signup setUser={jest.fn()} />);
 
-        const firstName = faker.name.firstName();
-        const email = faker.internet.email();
         const password = faker.internet.password();
 
         const firstNameNode = getByLabelText("First Name");
@@ -75,6 +67,24 @@ describe("Signup", () => {
         fireEvent.change(emailNode, { target: { value: emailValue } });
         fireEvent.change(passwordNode, { target: { value: emailValue } });
         fireEvent.change(passwordConfirmNode, { target: { value: emailValue } });
+
+        fireEvent.submit(getByTestId(/form/i));
+
+        expect(getByText("Password cannot be the same as your email or first name")).toBeInTheDocument();
+    });
+    it("displays an error if password matches first name", () => {
+        const { getByLabelText, getByText, getByTestId } = renderWithMemoryRouter(<Signup setUser={jest.fn()} />);
+        const firstName = faker.name.firstName();
+
+        const firstNameNode = getByLabelText("First Name");
+        const emailNode = getByLabelText("Email Address");
+        const passwordNode = getByLabelText("Password");
+        const passwordConfirmNode = getByLabelText("Confirm Password");
+
+        fireEvent.change(firstNameNode, { target: { value: firstName } });
+        fireEvent.change(emailNode, { target: { value: faker.internet.email() } });
+        fireEvent.change(passwordNode, { target: { value: firstName } });
+        fireEvent.change(passwordConfirmNode, { target: { value: firstName } });
 
         fireEvent.submit(getByTestId(/form/i));
 
