@@ -32,7 +32,7 @@ describe("The App", () => {
         fireEvent.change(passwordNode, { target: { value: password } });
         fireEvent.change(passwordConfirmNode, { target: { value: password } });
 
-        fireEvent.submit(getByTestId(/form/i));
+        fireEvent.submit(getByTestId("form"));
 
         jest.runAllTimers();
 
@@ -62,7 +62,7 @@ describe("The App", () => {
         expect(queryByText("Password must be longer than 8 characters")).toBeNull();
         expect(queryByText("Passwords must match")).toBeNull();
 
-        fireEvent.submit(getByTestId(/form/i));
+        fireEvent.submit(getByTestId("form"));
 
         expect(getByText("Password cannot be the same as your email or first name")).toBeInTheDocument();
         expect(getByText("Invalid email address")).toBeInTheDocument();
@@ -73,7 +73,7 @@ describe("The App", () => {
         fireEvent.change(emailNode, { target: { value: email } });
         fireEvent.change(passwordNode, { target: { value: password } });
 
-        fireEvent.submit(getByTestId(/form/i));
+        fireEvent.submit(getByTestId("form"));
 
         jest.runAllTimers();
 

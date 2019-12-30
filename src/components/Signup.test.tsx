@@ -26,7 +26,7 @@ describe("Signup", () => {
         fireEvent.change(passwordNode, { target: { value: password } });
         fireEvent.change(passwordConfirmNode, { target: { value: password } });
 
-        fireEvent.submit(getByTestId(/form/i));
+        fireEvent.submit(getByTestId("form"));
 
         expect(queryByText("Invalid email address")).toBeNull();
         expect(queryByText("Password cannot be the same as your email or first name")).toBeNull();
@@ -50,7 +50,7 @@ describe("Signup", () => {
         fireEvent.change(passwordNode, { target: { value: password } });
         fireEvent.change(passwordConfirmNode, { target: { value: password } });
 
-        fireEvent.submit(getByTestId(/form/i));
+        fireEvent.submit(getByTestId("form"));
 
         expect(getByText("Invalid email address")).toBeInTheDocument();
     });
@@ -68,7 +68,7 @@ describe("Signup", () => {
         fireEvent.change(passwordNode, { target: { value: emailValue } });
         fireEvent.change(passwordConfirmNode, { target: { value: emailValue } });
 
-        fireEvent.submit(getByTestId(/form/i));
+        fireEvent.submit(getByTestId("form"));
 
         expect(getByText("Password cannot be the same as your email or first name")).toBeInTheDocument();
     });
@@ -86,7 +86,7 @@ describe("Signup", () => {
         fireEvent.change(passwordNode, { target: { value: firstName } });
         fireEvent.change(passwordConfirmNode, { target: { value: firstName } });
 
-        fireEvent.submit(getByTestId(/form/i));
+        fireEvent.submit(getByTestId("form"));
 
         expect(getByText("Password cannot be the same as your email or first name")).toBeInTheDocument();
     });
@@ -103,7 +103,7 @@ describe("Signup", () => {
         fireEvent.change(passwordNode, { target: { value: "nogood" } });
         fireEvent.change(passwordConfirmNode, { target: { value: "nogood" } });
 
-        fireEvent.submit(getByTestId(/form/i));
+        fireEvent.submit(getByTestId("form"));
 
         expect(getByText("Password must be longer than 8 characters")).toBeInTheDocument();
     });
@@ -120,7 +120,7 @@ describe("Signup", () => {
         fireEvent.change(passwordNode, { target: { value: faker.internet.password() } });
         fireEvent.change(passwordConfirmNode, { target: { value: faker.internet.password() } });
 
-        fireEvent.submit(getByTestId(/form/i));
+        fireEvent.submit(getByTestId("form"));
 
         expect(getByText("Passwords must match")).toBeInTheDocument();
     });
