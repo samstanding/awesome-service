@@ -3,12 +3,15 @@
 import faker from "faker";
 
 describe("The Signup Form", () => {
-    it("saves valid form data and reroutes them to welcome page", () => {
+    it("displays validation rules, saves valid form data and reroutes them to welcome page", () => {
         const firstName = faker.name.firstName();
         const email = faker.internet.email();
         const password = faker.internet.password();
 
         cy.visit("/");
+
+        cy.get("li").contains("Password needs to be longer than 8 characters");
+        cy.get("li").contains("Password should not match your first name or email address");
 
         cy.get("[data-testid=firstname] > input")
             .type(firstName)
@@ -22,6 +25,10 @@ describe("The Signup Form", () => {
             .type(password)
             .should("have.value", password);
 
+        cy.get("[data-testid=passwordconfirm] > input")
+            .type(password)
+            .should("have.value", password);
+
         cy.get("[data-testid=submit]").click();
 
         cy.contains("Saving Signup Data");
@@ -32,12 +39,15 @@ describe("The Signup Form", () => {
 
         cy.get("strong").contains(email);
     });
-    it("displays appropriate errors when invalid form data is entered and still reroutes to welcome page when valid data is entered", () => {
+    it("shows validation rules, hides them when errors occur, displays appropriate errors when invalid form data is entered and still reroutes to welcome page when valid data is entered", () => {
         const firstName = faker.name.firstName();
         const email = faker.internet.email();
         const password = faker.internet.password();
 
         cy.visit("/");
+
+        cy.get("li").contains("Password needs to be longer than 8 characters");
+        cy.get("li").contains("Password should not match your first name or email address");
 
         cy.get("[data-testid=firstname] > input")
             .type(firstName)
@@ -51,10 +61,18 @@ describe("The Signup Form", () => {
             .type(firstName)
             .should("have.value", firstName);
 
+        cy.get("[data-testid=passwordconfirm] > input")
+            .type(password)
+            .should("have.value", password);
+
         cy.get("[data-testid=submit]").click();
 
         cy.get("li").contains("Invalid email address");
         cy.get("li").contains("Password cannot be the same as your email or first name");
+        cy.get("li").contains("Passwords must match");
+        
+        cy.get("li").should("not.have.value", "Password needs to be longer than 8 characters");
+        cy.get("li").should("not.have.value", "Password should not match your first name or email address");
 
         cy.get("[data-testid=email] > input")
             .clear()
@@ -69,6 +87,7 @@ describe("The Signup Form", () => {
         cy.get("[data-testid=submit]").click();
 
         cy.get("li").contains("Password cannot be the same as your email or first name");
+        cy.get("li").contains("Passwords must match");
 
         cy.get("[data-testid=password] > input")
             .clear()
@@ -78,6 +97,7 @@ describe("The Signup Form", () => {
         cy.get("[data-testid=submit]").click();
 
         cy.get("li").contains("Password must be longer than 8 characters");
+        cy.get("li").contains("Passwords must match");
 
         cy.get("[data-testid=password] > input")
             .clear()
