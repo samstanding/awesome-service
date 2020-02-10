@@ -63,7 +63,7 @@ const Signup: React.FC<SignupProps> = ({ setUser }: SignupProps) => {
                     <Form.Input
                         label="First Name"
                         value={firstName}
-                        onChange={(_e, { value }) => setFirstName(value)}
+                        onChange={(_e, { value }) => setEmail(value)}
                         placeholder="Your First Name"
                         required
                         data-testid="firstname"
